@@ -1,10 +1,9 @@
-from requests import post, get
 from flask import Flask, request, make_response
 from flask_cors import CORS
-import re
 import json
 # from config import CONFIG as config
 import logging
+import billing
 
 
 app = Flask(__name__)
@@ -17,12 +16,20 @@ app.logger.setLevel(logging.DEBUG)
 
 @app.route('/', methods=['POST'])
 def post_transaction():
-    json_data = request.get_json()
-    data = request.form
-    
-    app.logger.info(f"IN: {data.get('LMI_SYS_PAYMENT_DATE')}: {data.get('BUSINESS_ID')} - {data.get('LMI_PAID_AMOUNT')}. {data}")
 
-    return make_response(json.dumps({'transaction': 'OK'}), 200, {'Content-Type': 'application/json'})
+    data = request.form
+
+    app.logger.info(f"IN: {data}")
+    req = billing.payment(data)
+    res = req.json()
+    app.logger.info(f"RESPONSE: {res}")
+
+
+    # TODO сделать проверку контрольной суммы
+    # TODO сделать проверку IP отправителя
+
+
+    return make_response(json.dumps({'id': res.get('transaction', {}).get('id')}), req.status_code, {'Content-Type': 'application/json'})
 
 
 if __name__ == "__main__":

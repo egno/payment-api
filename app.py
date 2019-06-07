@@ -19,8 +19,8 @@ app.logger.setLevel(logging.DEBUG)
 def post_transaction():
     json_data = request.get_json()
     data = request.form
-    print(f'IN: {data.get('LMI_SYS_PAYMENT_DATE')}')
-    app.logger.info(f'IN: {data.get('LMI_SYS_PAYMENT_DATE')}: {data.get('BUSINESS_ID')} - {data.get('LMI_PAID_AMOUNT')}. {data}')
+    
+    app.logger.info(f"IN: {data.get('LMI_SYS_PAYMENT_DATE')}: {data.get('BUSINESS_ID')} - {data.get('LMI_PAID_AMOUNT')}. {data}")
 
     return make_response(json.dumps({'transaction': 'OK'}), 200, {'Content-Type': 'application/json'})
 

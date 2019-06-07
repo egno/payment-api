@@ -12,6 +12,7 @@ def payment(params):
         "amount": params.get('LMI_PAID_AMOUNT'),
         "paymentInfo": dict([{param, params.get(param)} for param in params])
     }
+    print(url, data)
     req = post(url, json=data, timeout=10)
     return(req)
 

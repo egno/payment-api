@@ -8,7 +8,7 @@ UNO_COMMISSION_PERCENT = config['unoCommissionPrecent'] or 0.0
 def payment(params, provider=None):
     url = BILLING_API.get('URL') + BILLING_API.get('transactionPath')
     print(params)
-    unoCommission = round((float(params.get('LMI_PAID_AMOUNT') or 0.0) * UNO_COMISSION_PERCENT / 100), 4)
+    unoCommission = round((float(params.get('LMI_PAID_AMOUNT') or 0.0) * UNO_COMMISSION_PERCENT / 100), 4)
     data = {
         "type": "CustomerPayment",
         "provider": provider,

@@ -20,7 +20,8 @@ def post_transaction():
     data = request.form
 
     app.logger.info(f"IN: {data}")
-    req = billing.payment(data)
+    provider = 'paymaster'
+    req = billing.payment(params=data, provider=provider)
     res = req.json()
     app.logger.info(f"RESPONSE: {res}")
 

@@ -1,8 +1,14 @@
 from requests import post
-from config import CONFIG as config
+from dotenv import load_dotenv
+import os
 
-BILLING_API = config['BILLING_API']
-UNO_COMMISSION_PERCENT = config['unoCommissionPrecent'] or 0.0
+load_dotenv()
+
+UNO_COMMISSION_PERCENT = float(os.getenv('PAYMENT_COMISSION', 0.0))
+BILLING_API = {
+        'URL': os.getenv('BILLING_API_URL'),
+        'transactionPath': 'transaction'
+    }
 
 
 def payment(params, provider=None):
